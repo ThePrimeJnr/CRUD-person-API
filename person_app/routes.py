@@ -31,7 +31,7 @@ def get_person(user_id):
         return {"Error": "Not Found"}, 404
 
 # UPDATE A PERSON BY ID
-@app.route('/api/<int:user_id>', methods=['PUT'])
+@app.route('/api/<int:user_id>', methods=['PUT', 'PATCH'])
 def update_person(user_id):
     try:
         person = Person.query.get(user_id)
