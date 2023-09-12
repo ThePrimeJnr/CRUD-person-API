@@ -7,7 +7,7 @@ class Person(db.Model):
 
     def to_json(self):
         return {
-            'isbn': self.user_id,
+            'user_id': self.user_id,
             'name': self.name
         }
 

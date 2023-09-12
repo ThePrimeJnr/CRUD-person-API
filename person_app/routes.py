@@ -35,9 +35,7 @@ def get_person(user_id):
 def update_person(user_id):
     try:
         person = Person.query.get(user_id)
-        person.title = request.json.get('title', person.title)
-        person.author = request.json.get('author', person.author)
-        person.price = request.json.get('price', person.price)
+        person.name = request.json.get('name', person.name)
         db.session.commit()
         return jsonify(person.to_json())
     except Exception as e:
