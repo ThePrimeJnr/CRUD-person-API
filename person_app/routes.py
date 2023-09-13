@@ -17,6 +17,21 @@ def create_person():
     except Exception as e:
         return jsonify({'error': 'Failed to create a person'}), 500
 
+# READ ALL PERSONS
+@app.route("/api", methods=["GET"])
+def get_persons():
+    persons = Person.query.all()
+    return jsonify([person.to_json() for person in persons]), 200
+
+# READ A PERSON BY ID
+@app.route("/api/<int:user_id>", methods=["GET"])
+def get_person(user_id):
+    try:
+        person = Person.query.get(user_id)
+        return jsonify(person.to_json()), 200
+    except Exception as e:
+        return {"error": "Person not Found"}, 404
+
 # UPDATE A PERSON BY ID
 @app.route('/api/<int:user_id>', methods=['PUT', 'PATCH'])
 def update_person(user_id):
