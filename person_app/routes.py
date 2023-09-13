@@ -1,19 +1,26 @@
 from flask import jsonify, request, abort
 from . import app, db
 from .models import Person
+import re
 
 # CREATE A PERSON
 @app.route('/api', methods=['POST'])
 def create_person():
     try:
         name = request.json.get('name')
-        if name:
-            person = Person(name=name)
-            db.session.add(person)
-            db.session.commit()
-            return jsonify({'message': f'{name} created successfully'}), 201
-        else:
+        if not name:
             return jsonify({'error': 'Name is required'}), 400
+
+        if not re.match("^[A-Za-z0-9\s]*$", name):
+            return jsonify({'error': 'Invalid characters in name'}), 400
+
+        if len(name) > 50:
+            return jsonify({'error': 'Name is too long'}), 400
+
+        person = Person(name=name)
+        db.session.add(person)
+        db.session.commit()
+        return jsonify({'message': f'{name} created successfully'}), 201
     except Exception as e:
         return jsonify({'error': 'Failed to create a person'}), 500
 
