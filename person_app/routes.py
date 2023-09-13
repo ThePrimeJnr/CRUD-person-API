@@ -6,49 +6,44 @@ from .models import Person
 @app.route('/api', methods=['POST'])
 def create_person():
     try:
-        person = Person(
-            name=request.json.get('name')
-        )
-        db.session.add(person)
-        db.session.commit()
-        return jsonify(person.to_json()), 201
+        name = request.json.get('name')
+        if name:
+            person = Person(name=name)
+            db.session.add(person)
+            db.session.commit()
+            return jsonify({'message': f'{name} created successfully'}), 201
+        else:
+            return jsonify({'error': 'Name is required'}), 400
     except Exception as e:
-        return {"Error": "Failed to Create Person"}, 400
-
-# READ ALL PERSONS
-@app.route("/api", methods=["GET"])
-def get_persons():
-    persons = Person.query.all()
-    return jsonify([person.to_json() for person in persons])
-
-# READ A PERSON BY ID
-@app.route("/api/<int:user_id>", methods=["GET"])
-def get_person(user_id):
-    try:
-        person = Person.query.get(user_id)
-        return jsonify(person.to_json())
-    except Exception as e:
-        return {"Error": "Not Found"}, 404
+        return jsonify({'error': 'Failed to create a person'}), 500
 
 # UPDATE A PERSON BY ID
 @app.route('/api/<int:user_id>', methods=['PUT', 'PATCH'])
 def update_person(user_id):
     try:
         person = Person.query.get(user_id)
-        person.name = request.json.get('name', person.name)
-        db.session.commit()
-        return jsonify(person.to_json())
+        if person:
+            name = request.json.get('name', person.name)
+            person.name = name
+            db.session.commit()
+            return jsonify({'message': f'{name} updated successfully'}), 200
+        else:
+            return jsonify({'error': 'Person not found'}), 404
     except Exception as e:
-        return {"Error": "Not Found"}, 404
+        return jsonify({'error': 'Failed to update the person'}), 500
 
 # DELETE A PERSON
 @app.route("/api/<int:user_id>", methods=["DELETE"])
 def delete_person(user_id):
     try:
         person = Person.query.get(user_id)
-        db.session.delete(person)
-        db.session.commit()
-        return jsonify({'result': True})
+        if person:
+            name = person.name
+            db.session.delete(person)
+            db.session.commit()
+            return jsonify({'message': f'{name} deleted successfully'}), 200
+        else:
+            return jsonify({'error': 'Person not found'}), 404
     except Exception as e:
-        return {"Error": "Not Found"}, 404
+        return jsonify({'error': 'Failed to delete the person'}), 500
 
