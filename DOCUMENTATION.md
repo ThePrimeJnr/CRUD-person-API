@@ -4,6 +4,13 @@
 
 The CRUD Person API is designed to facilitate the management of person records. It provides endpoints for creating, retrieving, updating, and deleting person entries.
 
+### UML and ER Diagrams
+#### UML Diagram
+![UML (1)](https://github.com/DestinedCodes/CRUD-person-API/assets/84413505/7844d023-fa53-4934-b5a1-ef83cfd74cea)
+
+#### ER Diagram
+![ER](https://github.com/DestinedCodes/CRUD-person-API/assets/84413505/8fe4e697-920e-47ff-9bc5-802b42947e81)
+
 ## Request Format
 
 ### Create a Person (POST)
