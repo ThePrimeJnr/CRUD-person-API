@@ -1,4 +1,4 @@
-# 🚀 CRUD Person API - HNGx Backend SE Intern 🚀
+# 🚀 CRUD Person REST API - HNGx 🚀
 
 ### Project Description
 
@@ -63,6 +63,14 @@ To run tests for the API, use the following command:
 ```bash
 python -m unittest tests/<specific test file>
 ```
+
+### UML and ER Diagrams
+#### UML Diagram
+![UML (1)](https://github.com/DestinedCodes/CRUD-person-API/assets/84413505/7844d023-fa53-4934-b5a1-ef83cfd74cea)
+
+#### ER Diagram
+![ER](https://github.com/DestinedCodes/CRUD-person-API/assets/84413505/8fe4e697-920e-47ff-9bc5-802b42947e81)
+
 
 ### Deployment
 
