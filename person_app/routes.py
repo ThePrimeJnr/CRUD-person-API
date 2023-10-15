@@ -37,8 +37,7 @@ def get_person(user_id):
         if user_id <= 0:
             return {"error": "Invalid user_id"}, 400
 
-        person = Person.query.get(user_id)
-        if person:
+        if person := Person.query.get(user_id):
             return jsonify(person.to_json()), 200
         else:
             return {"error": "Person not found"}, 404
@@ -50,8 +49,7 @@ def get_person(user_id):
 @app.route('/api/<int:user_id>', methods=['PUT', 'PATCH'])
 def update_person(user_id):
     try:
-        person = Person.query.get(user_id)
-        if person:
+        if person := Person.query.get(user_id):
             name = request.json.get('name', person.name)
             person.name = name
             db.session.commit()
@@ -65,8 +63,7 @@ def update_person(user_id):
 @app.route("/api/<int:user_id>", methods=["DELETE"])
 def delete_person(user_id):
     try:
-        person = Person.query.get(user_id)
-        if person:
+        if person := Person.query.get(user_id):
             name = person.name
             db.session.delete(person)
             db.session.commit()
